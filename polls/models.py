@@ -21,3 +21,15 @@ class Choice(models.Model):
 
     def __str__(self):
         return self.choice_text
+
+class User(models.Model):
+    name = models.CharField(max_length=100)
+    responses = models.ManyToManyField(Choice, through='Response')
+
+    def __str__(self):
+        return self.name
+    
+class Response(models.Model):
+    date = models.DateTimeField()
+    user = models.ForeignKey(User, on_delete=models.PROTECT)
+    choice = models.ForeignKey(Choice, on_delete=models.PROTECT)
